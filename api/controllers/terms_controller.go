@@ -1,10 +1,9 @@
 package controllers
 
 import (
+	"dictionary/api/auth"
 	"dictionary/api/models"
 	"net/http"
-
-	uuid "github.com/satori/go.uuid"
 
 	"github.com/gin-gonic/gin"
 )
@@ -35,7 +34,11 @@ func CreateTerm(c *gin.Context) {
 		return
 	}
 
-	userID, _ := uuid.FromString("9c5151fd-8711-443c-a4f3-b977e5eae1e6")
+	userID, err := auth.GetLoggedUserID(c)
+	if err != nil {
+		c.AbortWithStatus(http.StatusUnauthorized)
+	}
+
 	// Create term
 	term := models.Term{Name: input.Name, Pronuciation: input.Pronuciation, Definition: input.Pronuciation, Synonyms: input.Synonyms, CreatedByID: userID}
 	models.DB.Create(&term)

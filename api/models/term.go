@@ -23,6 +23,7 @@ type Term struct {
 // BeforeCreate - create new uuid
 func (term *Term) BeforeCreate(tx *gorm.DB) (err error) {
 	term.ID = uuid.NewV4()
+	term.UpdatedByID = term.CreatedByID
 	return
 }
 

@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"dictionary/api/auth"
 	"dictionary/api/controllers"
 
 	"github.com/gin-gonic/gin"
@@ -13,6 +14,8 @@ func Initialize(router *gin.Engine) {
 	// router.PUT("/somePut", putting)
 	// router.DELETE("/someDelete", deleting)
 	// router.PATCH("/somePatch", patching)
+
+	router.Use(auth.JwtFilter())
 
 	router.GET("/terms", controllers.FindTerms)
 	router.POST("/terms", controllers.CreateTerm)
