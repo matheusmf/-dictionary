@@ -24,5 +24,5 @@ func ConnectDatabase() {
 		fmt.Printf("We are connected to the %s database", os.Getenv("DB_DRIVER"))
 	}
 
-	DB.AutoMigrate(&Term{})
+	DB.AutoMigrate(&Term{}, &RelatedTerm{})
 }
