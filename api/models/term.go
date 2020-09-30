@@ -46,5 +46,12 @@ func (term *Term) BeforeCreate(tx *gorm.DB) (err error) {
 // BeforeSave = update updatedAt
 func (term *Term) BeforeSave(tx *gorm.DB) (err error) {
 	term.UpdatedAt = time.Now()
+	term.UpdatedByID = term.CreatedByID
+	if len(term.RelatedTerms) > 0 {
+		for index := range term.RelatedTerms {
+			term.RelatedTerms[index].ID = uuid.NewV4()
+			term.RelatedTerms[index].TermID = term.ID
+		}
+	}
 	return
 }

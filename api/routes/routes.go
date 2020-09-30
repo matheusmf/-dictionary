@@ -18,5 +18,7 @@ func Initialize(router *gin.Engine) {
 	router.Use(auth.JwtFilter())
 
 	router.GET("/terms", controllers.FindTerms)
+	router.GET("/terms/:term_id", controllers.FindTerm)
 	router.POST("/terms", controllers.CreateTerm)
+	router.PUT("/terms/:term_id", controllers.UpdateTerm)
 }
